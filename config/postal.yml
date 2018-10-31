@@ -65,8 +65,14 @@ dns:
 smtp_server:
   port: <%= ENV["POSTAL_SMTP_SERVER_PORT"] %>
 
-# TODO: We may need this!
-# smtp_relays:
+<% if ENV["POSTAL_SMTP_RELAY_HOSTNAME"] %>
+smtp_relays:
+  - hostname: <%= ENV["POSTAL_SMTP_RELAY_HOSTNAME"] %>
+    port: <%= ENV["POSTAL_SMTP_RELAY_PORT"] %>
+    ssl_mode: <%= ENV["POSTAL_SMTP_RELAY_SSL_MODE"] %>
+    user: <%= ENV["POSTAL_SMTP_RELAY_USER"] %>
+    secret: <%= ENV["POSTAL_SMTP_RELAY_SECRET"] %>
+<% end %>
 
 smtp:
   # Specify an SMTP server that can be used to send messages from the Postal management
