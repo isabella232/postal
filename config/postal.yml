@@ -27,6 +27,8 @@ general:
   # `0.0.0.0`, which obviously doesn't work if you try to use it for
   # resolution.
   use_local_ns_for_domains: true
+  # Disable Postal's self-management of SSL for tracking domains
+  use_external_ssl_for_tracking: <%= ENV["POSTAL_GENERAL_USE_EXTERNAL_SSL_FOR_TRACKING"] %>
 
 main_db:
   # Specify the connection details for your MySQL database

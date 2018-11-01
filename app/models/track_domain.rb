@@ -74,11 +74,15 @@ class TrackDomain < ApplicationRecord
   end
 
   def has_ssl?
-    ssl_certificate && ssl_certificate.active?
+    ssl_certificate && (use_external_ssl? || ssl_certificate.active?)
   end
 
   def use_ssl?
     ssl_enabled? && has_ssl?
+  end
+
+  def use_external_ssl?
+    Postal.config.general.use_external_ssl_for_tracking?
   end
 
   def ssl_certificate

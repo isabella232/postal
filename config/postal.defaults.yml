@@ -13,6 +13,7 @@ general:
   exception_url:
   maximum_delivery_attempts: 18
   use_local_ns_for_domains: false
+  use_external_ssl_for_tracking: false
 
 web_server:
   bind_address: 127.0.0.1
