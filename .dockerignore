@@ -1,0 +1,8 @@
+.bundle
+.git
+.byebug_history
+Dockerfile
+log
+tmp
+public/assets
+vendor/bundle
