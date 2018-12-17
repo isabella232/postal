@@ -23,11 +23,17 @@ module Postal
           hostname = server[:hostname]
           port = server[:port] || 25
           ssl_mode = server[:ssl_mode] || 'Auto'
+          user = server[:user]
+          secret = server[:secret]
         else
           hostname = server
           port = 25
           ssl_mode = 'Auto'
         end
+
+        # Credentials are only defined for relay hosts
+        user ||= nil
+        secret ||= nil
 
         @hostnames << hostname
         [:aaaa, :a].each do |ip_type|
@@ -63,7 +69,10 @@ module Postal
             else
               # Nothing
             end
-            smtp_client.start(@source_ip_address ? @source_ip_address.hostname : self.class.default_helo_hostname)
+            smtp_client.start(
+              @source_ip_address ? @source_ip_address.hostname : self.class.default_helo_hostname,
+              user, secret
+            )
             log "Connected to #{@remote_ip}:#{port} (#{hostname})"
           rescue => e
             log "Cannot connect to #{@remote_ip}:#{port} (#{hostname}) (#{e.class}: #{e.message})"
@@ -262,7 +271,9 @@ module Postal
           {
             :hostname => relay.hostname,
             :port => relay.port,
-            :ssl_mode => relay.ssl_mode
+            :ssl_mode => relay.ssl_mode,
+            :user => relay.user,
+            :secret => relay.secret,
           }
         else
           nil
